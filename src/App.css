@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+    font-family: "Josefin Sans", sans-serif;
+}
+
+:root{
+    --bs-border-color: hsl(233, 14%, 35%)  !important;
+}
+
+[data-theme="light"] {
+    --bg-primary: hsl(0, 0%, 98%);
+    --bg-secondary: hsl(236, 33%, 92%);
+    --text-primary: hsl(235, 19%, 35%);
+    --text-secondary: hsl(236, 9%, 61%);
+    --text-light:#000;
+    --bg-image: url(./assets/bg-desktop-light.jpg);
+}
+
+[data-theme="dark"] {
+    --bg-primary: hsl(235, 21%, 11%);
+    --bg-secondary: hsl(235, 24%, 19%);
+    --text-primary: hsl(234, 39%, 85%);
+    --text-secondary: hsl(234, 11%, 52%);
+    --text-light:#fff;
+    --bg-image: url(./assets/bg-desktop-dark.jpg);
+}
+
+.background {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+    background-image: var(--bg-image);
+    background-position: top center; 
+    background-repeat: no-repeat;
+    background-size: 100% 40%; 
+}
+.small{
+    font-size: .875em !important;
+}
+
+.fs-18 {
+    font-size: 18px;
+}
+
+.bg-checkbox:checked {
+    background: linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+}
+
+.active-tab {
+    color: hsl(220, 98%, 61%);
+}
+
+.border {
+    border: 1px solid var(--bs-border-color) !important;
+}
+
+.text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+.bg-secondary {
+    background-color: var(--bg-secondary) !important;
+}
+
+.outline-0{
+    outline: none;
+}
+
+.h-80{
+    height: 80%;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.text-light{
+    color: var(--text-light);
+}
+
+.custom-checkbox {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 99;
+}
+
+.custom-checkbox + div:hover {
+    border-color: hsl(192, 100%, 67%) !important;
+}
+
+.custom-checkbox:checked + div {
+    background: linear-gradient(to right, hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+    position: relative;
+}
+
+.custom-checkbox:checked + div::after {
+    content: "";
+    background: url(./assets/icon-check.svg) no-repeat center;
+    background-size: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    transform: translate(-50%, -50%);
+}
+
+input[type="text"] {
+    caret-color: hsl(220, 98%, 61%);
+}
+
+.text-hover-light{
+    &:hover{
+        color: #fff !important;
+    }
+}
