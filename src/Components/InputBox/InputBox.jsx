@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import crossIcon from '../../assets/icon-cross.svg';
 import { MdEdit } from "react-icons/md";  
+import {UseToDoItem} from "../../Hooks/UseToDoItem";
 import { UniqueIdGenerator } from '../../Services/utils';
+
 
 function InputBox(props) {
   
   const [removeIconVisbility, SetremoveIconVisbility] = useState(false);
   const InputRef = useRef();
+  const { addNewItem, updateItem, removeItem  } = UseToDoItem();
 
   const [item, SetItem] = useState({
     id:"",
@@ -33,7 +36,8 @@ function InputBox(props) {
     {
       SetItem(prev => {
         const updatedItem = { ...prev, isCompleted: e.target.checked };
-        props.editItem(updatedItem);  
+        // props.editItem(updatedItem);  
+        updateItem(updatedItem);
         return updatedItem;
       });
     }
@@ -51,18 +55,21 @@ function InputBox(props) {
   const handleEnter = (e) => {
     if (e.key === "Enter") {
       if (props.Mode === "View") {
-        props.editItem(item);
+        // props.editItem(item);
+        updateItem(item);
       } else {
         let newId = UniqueIdGenerator();
         const updatedItem = { ...item, id: newId };
-        props.addItem(updatedItem);
+        // props.addItem(updatedItem);
+        addNewItem(updatedItem);
         SetItem({ id: "", description: "", isCompleted: false }); 
       }
     }
   };
 
   const handleRemoveItem = () => {
-    props.removeItem(item.id);
+    // props.removeItem(item.id);
+    removeItem(item.id);  
   }
   
   const handleEditItem = () => {

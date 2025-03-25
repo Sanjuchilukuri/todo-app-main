@@ -1,18 +1,19 @@
 import React, { useState } from 'react'
+import { UseToDoItem } from '../../Hooks/UseToDoItem';
 
-function Filters(props) {
+function Filters() {
   
   const [activeFilter,SetActiveFilter] = useState('All');
-  
+  const {items, applyFilters, removeAllCompleteditems} = UseToDoItem();
 
   return (
     <div className='bg-secondary d-flex px-3 justify-content-between align-items-center py-3'>
-        <p className='small m-0 text-secondary ' >{props.totalItemsCount} items left</p>
+        <p className='small m-0 text-secondary ' >{items?.length||0} items left</p>
         <div className='d-flex gap-2'>
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'All'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    props.applyFilters("All");
+                    applyFilters("All");
                     SetActiveFilter('All');  
                 }}
             >
@@ -21,7 +22,7 @@ function Filters(props) {
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'Active'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    props.applyFilters("Active");
+                    applyFilters("Active");
                     SetActiveFilter('Active');  
                 }}
             >
@@ -30,14 +31,14 @@ function Filters(props) {
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'Completed'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    props.applyFilters("Completed");
+                    applyFilters("Completed");
                     SetActiveFilter('Completed');  
                 }}
             >
                 Completed
             </p>
         </div>
-        <p className='small m-0 text-secondary text-hover-light cursor-pointer' onClick={() => {props.removeCompleteditems()}}>Clear Completed</p>
+        <p className='small m-0 text-secondary text-hover-light cursor-pointer' onClick={() => {removeAllCompleteditems()}}>Clear Completed</p>
     </div>
   )
 }
