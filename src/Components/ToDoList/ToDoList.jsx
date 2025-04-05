@@ -2,10 +2,14 @@ import React, { useEffect, useState } from 'react';
 import InputBox from '../InputBox/InputBox';
 import { getItems } from '../../Services/LocalStorage';
 import { UseToDoItem } from '../../Hooks/UseToDoItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateOrder } from '../../Redux/Actions/actions';
 
 export default function ToDoList() {
 
-  const {items, updateOrder} = UseToDoItem();
+  const dispatch = useDispatch();
+  const items = useSelector( state => state.TodoItems.filteredItems );
+  // const {updateOrder} = UseToDoItem();
 
   const [draggedItem, setDraggedItem] = useState(null);
 
@@ -29,8 +33,7 @@ export default function ToDoList() {
     // Remove the dragged item and insert it at the new position
     updatedItems.splice(draggedItem, 1);
     updatedItems.splice(index, 0, draggedItemContent);
-
-    updateOrder(updatedItems);
+    dispatch(updateOrder(updatedItems));
     // setItems(updatedItems);
     setDraggedItem(null);
   };

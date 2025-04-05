@@ -3,13 +3,16 @@ import crossIcon from '../../assets/icon-cross.svg';
 import { MdEdit } from "react-icons/md";  
 import {UseToDoItem} from "../../Hooks/UseToDoItem";
 import { UniqueIdGenerator } from '../../Services/utils';
+import {addItem, modifyItem, removeItem} from "../../Redux/Actions/actions";
+import { useDispatch } from 'react-redux';
 
 
 function InputBox(props) {
   
+  const dispatch = useDispatch();
   const [removeIconVisbility, SetremoveIconVisbility] = useState(false);
   const InputRef = useRef();
-  const { addNewItem, updateItem, removeItem  } = UseToDoItem();
+  // const { addNewItem, updateItem, removeItem  } = UseToDoItem();
 
   const [item, SetItem] = useState({
     id:"",
@@ -37,7 +40,7 @@ function InputBox(props) {
       SetItem(prev => {
         const updatedItem = { ...prev, isCompleted: e.target.checked };
         // props.editItem(updatedItem);  
-        updateItem(updatedItem);
+        dispatch(modifyItem(updatedItem));
         return updatedItem;
       });
     }
@@ -52,24 +55,25 @@ function InputBox(props) {
   };
 
 
-  const handleEnter = (e) => {
-    if (e.key === "Enter") {
-      if (props.Mode === "View") {
-        // props.editItem(item);
-        updateItem(item);
-      } else {
-        let newId = UniqueIdGenerator();
-        const updatedItem = { ...item, id: newId };
-        // props.addItem(updatedItem);
-        addNewItem(updatedItem);
-        SetItem({ id: "", description: "", isCompleted: false }); 
+    const handleEnter = (e) => {
+      if (e.key === "Enter") {
+        if (props.Mode === "View") {
+          // props.editItem(item);
+          dispatch(modifyItem(item));
+        } else {
+          let newId = UniqueIdGenerator();
+          const updatedItem = { ...item, id: newId };
+          // props.addItem(updatedItem);
+          // addNewItem(updatedItem);
+          dispatch(addItem(updatedItem));
+          SetItem({ id: "", description: "", isCompleted: false }); 
+        }
       }
-    }
-  };
+    };
 
   const handleRemoveItem = () => {
     // props.removeItem(item.id);
-    removeItem(item.id);  
+    dispatch(removeItem(item.id));  
   }
   
   const handleEditItem = () => {
@@ -81,8 +85,11 @@ function InputBox(props) {
 
 
   const handleDisableInput = (e) => {
-    InputRef.current.disabled = true;
-    InputRef.current.style.fontWeight = "" ; 
+    if( props.Mode == "View" )
+    {
+      InputRef.current.disabled = true;
+      InputRef.current.style.fontWeight = "" ; 
+    }
   }
 
   return (

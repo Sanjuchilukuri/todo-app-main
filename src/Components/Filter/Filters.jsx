@@ -1,10 +1,16 @@
 import React, { useState } from 'react'
 import { UseToDoItem } from '../../Hooks/UseToDoItem';
+import { removeCompletedItems } from "../../Redux/Actions/actions";
+import { useDispatch, useSelector } from 'react-redux';
+import {applyFilter} from "../../Redux/Actions/actions";
 
 function Filters() {
   
+  const dispatch = useDispatch();
+  const items = useSelector( state => state.TodoItems.filteredItems );
+
   const [activeFilter,SetActiveFilter] = useState('All');
-  const {items, applyFilters, removeAllCompleteditems} = UseToDoItem();
+//   const {applyFilters, removeAllCompleteditems} = UseToDoItem();
 
   return (
     <div className='bg-secondary d-flex px-3 justify-content-between align-items-center py-3'>
@@ -13,7 +19,7 @@ function Filters() {
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'All'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    applyFilters("All");
+                    dispatch(applyFilter("All"));
                     SetActiveFilter('All');  
                 }}
             >
@@ -22,7 +28,7 @@ function Filters() {
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'Active'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    applyFilters("Active");
+                    dispatch(applyFilter("Active"));
                     SetActiveFilter('Active');  
                 }}
             >
@@ -31,14 +37,14 @@ function Filters() {
             <p 
                 className={`small m-0  cursor-pointer ${activeFilter == 'Completed'?'text-primary':'text-hover-light'}`} 
                 onClick={() => {
-                    applyFilters("Completed");
+                    dispatch(applyFilter("Completed"));
                     SetActiveFilter('Completed');  
                 }}
             >
                 Completed
             </p>
         </div>
-        <p className='small m-0 text-secondary text-hover-light cursor-pointer' onClick={() => {removeAllCompleteditems()}}>Clear Completed</p>
+        <p className='small m-0 text-secondary text-hover-light cursor-pointer' onClick={() => {dispatch(removeCompletedItems())}}>Clear Completed</p>
     </div>
   )
 }

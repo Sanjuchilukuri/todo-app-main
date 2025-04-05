@@ -1,10 +1,13 @@
 import React from 'react'
 import moonIcon from "../../assets/icon-moon.svg"
 import sunIcon from '../../assets/icon-sun.svg';
-import { UseTheme } from '../../Hooks/UseTheme';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleTheme } from '../../Redux/Actions/actions';
 
 function Header() {
-  const {currentTheme, toggleTheme} = UseTheme();
+  const dispatch = useDispatch();
+  const currentTheme = useSelector(state => state.Theme.theme);
+
   return (
     <div className='d-flex justify-content-between'>
       <h1 className='h1 fw-700 '>T O D O</h1>
@@ -13,7 +16,7 @@ function Header() {
         height={"25px"} 
         src={currentTheme == "dark"?sunIcon:moonIcon} 
         alt="Theme-Icon"
-        onClick={() => toggleTheme()}
+        onClick={() => dispatch(toggleTheme())}
       />
     </div>
   )

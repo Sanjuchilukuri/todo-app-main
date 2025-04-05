@@ -3,13 +3,11 @@ import Header from './Components/Header/Header';
 import InputBox from './Components/InputBox/InputBox';
 import ToDoList from './Components/ToDoList/ToDoList';
 import Filters from './Components/Filter/Filters';
-import { useState, useEffect } from 'react';
-import { getItems, addItem, editItem, removeItemById, removeCompleteditems } from './Services/LocalStorage';
-import { UseTheme } from './Hooks/UseTheme';
+import { useSelector } from 'react-redux';
 
 function App() {
 
-  const {currentTheme} = UseTheme();
+  const currentTheme = useSelector(state => state.Theme.theme);
 
   return (
     <div className='background vh-100 vw-100 row m-0 ' data-theme={currentTheme}>
